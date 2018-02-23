@@ -72,15 +72,23 @@
 	if (gdalinfo['oblique.x'] != 0 | gdalinfo['oblique.y'] != 0) {
 		rotated <- TRUE
 
+		# addition 1
+		res1 <- attributes(rgdal::readGDAL(filename))$bbox
+
 		## adapted from rgdal::getGeoTransFunc
 		if (warn) {
 			warning('\n\n This file has a rotation\n Support for such files is limited and results of data processing might be wrong.\n Proceed with caution & consider using the "rectify" function\n')
 		}
 		rotMat <- matrix(gdalinfo[c('res.x', 'oblique.x', 'oblique.y', 'res.y')], 2)
+
+		# addition 2
+		if (all(res1[, "min"] < 0)) {
+		  rotMat[2] <- rotMat[2] * -1
+		  rotMat[3] <- rotMat[3] * -1
+		}
+
 		ysign <- attr(gdalinfo, 'ysign')
 		rotMat[4] <- rotMat[4] * ysign
-
-		# TODO: RSc
 
 		invMat <- solve(rotMat)
 
