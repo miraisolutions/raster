@@ -1,13 +1,8 @@
-
 .onLoad <- function(lib, pkg)  {
-#	pkg.info <- utils::packageDescription('raster') 
-#	packageStartupMessage(paste("raster ", pkg.info[["Version"]], " (", pkg.info["Date"], ")", sep=""))
-#	wd <- getwd()
-#	options('startup.working.directory'=wd)
-#	fn <- paste(wd, '/rasterOptions_', pkg.info[["Version"]], sep='')
-#	.loadOptions(fn)
-
-#	try( removeTmpFiles( .tmptime() ), silent=TRUE ) 
-	return(invisible(0))
+  pkg.info <- utils::packageDescription('raster')
+  packageStartupMessage(paste0(
+    "\n modified raster ", pkg.info[["Version"]], " (", pkg.info["Date"], ")\n\n ",
+    "you are using an unofficial, non-CRAN version of the raster package\n"
+  ))
+	return(invisible())
 }
-
